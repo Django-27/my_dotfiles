@@ -11,3 +11,5 @@ alias mv='mv -i'
 if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
+
+export WORKON_HOME=/root/py_env
