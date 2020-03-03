@@ -13,3 +13,5 @@ if [ -f /etc/bashrc ]; then
 fi
 
 export WORKON_HOME=/root/py_env
+VIRTUALENVWRAPPER_PYTHON='/usr/local/bin/python3.8'
+source /usr/local/bin/virtualenvwrapper.sh
