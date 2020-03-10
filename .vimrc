@@ -17,7 +17,7 @@ call vundle#begin()
     Plugin 'w0rp/ale'             " syntax checking and semantic errors
     Plugin 'davidhalter/jedi-vim' " autocompletion library
     Plugin 'nvie/vim-flake8'      " a static syntax and style checker for Python source code
-    Plugin 'jmcantrell/vim-virtualenv' " vim plugin for working with python virtualenvs
+    Plugin 'jmcantrell/vim-virtualenv' " vim plugin for working with python virtualenvs(:VirtualEnvList and :VirtualEnvActivate env_name)
     Plugin 'ctrlpvim/ctrlp.vim'   " full path fuzzy file, buffer, mru, tag,... finder for Vim
     Plugin 'scrooloose/syntastic' " syntax checking plugin for Vim
     Plugin 'majutsushi/tagbar'    " browse the tags of the current file and get an overview of its structure
@@ -47,11 +47,11 @@ let g:ycm_confirm_extra_conf=0 " 停止提示是否载入本地ycm_extra_conf文
 let g:ycm_autoclose_preview_window_after_completion=1
 let g:ycm_collect_identifiers_from_comments_and_strings = 1   "注释和字符串
 let g:ycm_key_list_stop_completion = ['<C-y>'] " 停止显示补全列表(防止列表影响视野), 可以按<C-Space>重新弹出
-nnoremap <leader>jc :YcmCompleter GoToDeclaration<CR>>
-nnoremap <leader>jd :YcmCompleter GoToDefinition<CR>>
-nnoremap <leader>je :YcmCompleter GoToDefinitionElseDeclaration<CR>>
+nnoremap <leader>fc :YcmCompleter GoToDeclaration<CR>>
+nnoremap <leader>fd :YcmCompleter GoToDefinition<CR>>
+nnoremap <leader>fe :YcmCompleter GoToDefinitionElseDeclaration<CR>>
 let g:ycm_python_binary_path = '/usr/local/bin/python3' " which python used
-let g:ycm_global_ycm_extra_conf='/root/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
+let g:ycm_global_ycm_extra_conf='/root/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py' " :YcmRestartServer
 
 nmap <F2> :NERDTreeToggle<CR>
 let g:NERDTreeDirArrowExpandable = '▸' " <C-w> + w 光标自动在左右侧窗口切换
@@ -129,8 +129,6 @@ set showmatch
 hi MatchParen ctermbg=Yellow guibg=lightblue
 " 允许光标出现在最后一个字符的后面
 set virtualedit=block,onemore
-" 光标键跨行
-set whichwrap+=<,>,h,l
 
 " 文件修改之后自动读入
 set autoread
@@ -141,13 +139,15 @@ set autowrite
 " 选择模式使用鼠标
 set selectmode=mouse,key
 " 共享剪贴板
-" set clipboard^=unnamed
+set clipboard^=unnamed
 if has("clipboard")
     set clipboard=unnamed " copy to the system clipboard
     if has("unnamedplus") " mac X11 support
         set clipboard+=unnamedplus
     endif
 endif
+
+"set clipboard=unnamedplus
 
 " 开启行号显示
 set number
@@ -198,7 +198,7 @@ else
     set background=dark
 endif
 
-" 主题设置为solarized8在.vim/pack
+" 主题设置为solarized8在.vim/pack, (:colorscheme)
 set background=dark
 colorscheme solarized8
 
@@ -284,13 +284,9 @@ set cindent
 set cinoptions=g0,:0,N-s,(0
 " 智能选择对齐方式
 set smartindent
-" 当一行字符超过窗口宽度时，禁止换行显示
-set nowrap
-" 当打开换行显示时，在空格处换行
-set linebreak
 
 " 带有如下符号的单词不要被换行分割
-set iskeyword+=_,$,@,%,#,-
+set iskeyword+=_,$,@,%,#,-,,
 " 打开断行模块对亚洲语言支持
 " m 表示允许在两个汉字之间断行， 即使汉字之间没有出现空格
 " B 表示将两行合并为一行的时候， 汉字与汉字之间不要补空格
@@ -339,7 +335,7 @@ au BufNewFile,BufRead *.py
     \ set tabstop=4
     \ softtabstop=4
     \ shiftwidth=4
-    \ textwidth=79
+    \ textwidth=0
     \ expandtab
     \ autoindent
     \ fileformat=unix
@@ -384,7 +380,9 @@ function RelativenumberToggle()
     endif
 endfunc
 
-" <F7> 打开/关闭自动换行
+" <F7> 打开/关闭自动换行, 默认指定为nowrap
+"set whichwrap+=<,>,h,l  "光标键跨行
+set nowrap
 nnoremap <F7> :set wrap! wrap?<CR>
 
 " <F8> 打开/关闭鼠标功能
@@ -405,7 +403,7 @@ nnoremap <F9> :set expandtab! expandtab?<CR>
 " 把 <Tab> 替换成 4 个空格
 nnoremap tt :%s/\t/    /g<CR>
 " 删除行尾多余空格
-nnoremap cl :%s/\s\+$//g<CR>:w<CR
+nnoremap cl :%s/\s\+$//g<CR>
 
 "********************************************************************************
 " 编译、调试

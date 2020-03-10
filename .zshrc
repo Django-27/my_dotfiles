@@ -109,4 +109,9 @@ export TERM=screen
 #source ~/.oh-my-zsh/plugins/incr/incr*.zsh
 #source ~/.bashrc
 #source ~/.bash_profile
-echo 'hello .zshrc'
+
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
+alias st='status'
