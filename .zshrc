@@ -68,7 +68,9 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+HIST_STAMPS="yyyy-mm-dd"
+
+plugins=(git autojump)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -97,4 +99,14 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-source ~/.oh-my-zsh/plugins/incr/incr*.zsh
+
+export WORKON_HOME=/root/py_env
+VIRTUALENVWRAPPER_PYTHON='/usr/local/bin/python3.8'
+source /usr/local/bin/virtualenvwrapper.sh
+
+export TERM=screen
+
+#source ~/.oh-my-zsh/plugins/incr/incr*.zsh
+#source ~/.bashrc
+#source ~/.bash_profile
+echo 'hello .zshrc'
