@@ -1,0 +1,19 @@
+[user]
+	name = qiyuan
+	email = nfs_fly@163.com
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+[core]
+	editor = vim
+[alias]
+    co = checkout
+    ci = commit
+    br = branch
+    st = status
+    co = checkout
+    cp = cherry-pick
+    ll = log --pretty=format:'%C(green)%h%Creset - %s%C(yellow)%d%Creset%n          %aD (%ar %C(red)- %an%Creset)' --graph --color --all
+    unstash = stash pop
