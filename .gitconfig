@@ -16,4 +16,21 @@
     co = checkout
     cp = cherry-pick
     ll = log --pretty=format:'%C(green)%h%Creset - %s%C(yellow)%d%Creset%n          %aD (%ar %C(red)- %an%Creset)' --graph --color --all
+    lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
     unstash = stash pop
+
+# 放弃本地修改 - 未add操作的，git co -- . 或 git co -- <file>
+#              - 已add操作的，git reset HEAD . 或 git reset HEAD <file>
+#              - 已commit操作的，git reset --hard commitid 或 git reset --hard HEAD^ （参数hard：撤销相应工作区的修改，慎用；参数soft：保留当前工作区，以便重新提交）
+#              - 已push操作的，git reset --soft commitid 并 git push origin 分支名 --force （强制提交当前版本号，以达到撤销版本号的目的）
+# 合并分支 - git co -br dev
+#          - git merge dev ,merge命令会留下dev分支，合并的地方多一个merge节点
+#          - git rebase dev ,rebase命令丢弃了dev分支的提交，好像没有存在过这个分支
+# 删除远程分支: - git br -d dev
+#               - git push origin :<branch-name> 或 git push origin --delete <branch-name>
+# 标签： - 创建 轻量标签: git tag 标签名称
+#        - 创建 附注标签: git tag -a 标签名称 -m '标签注释信息'
+#        - 已commit的追加tag：git tag -a taginfo commitId
+#        - 查询标签的具体信息: git show taginfo, git tag -l taginfo, git tag -d taginfo
+#        - 提交： git push 远程仓库 标签名称 （批量提交标签 git push 远程仓库 --tags）
+#        - 删除远程标签：git push origin :refs/tags/tag-name
