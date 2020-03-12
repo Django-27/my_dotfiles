@@ -34,3 +34,7 @@
 #        - 查询标签的具体信息: git show taginfo, git tag -l taginfo, git tag -d taginfo
 #        - 提交： git push 远程仓库 标签名称 （批量提交标签 git push 远程仓库 --tags）
 #        - 删除远程标签：git push origin :refs/tags/tag-name
+# 分拣： - 在分支B，将A分支的commit-id-A引入分支B: git cherry-pick commit-id-A
+#        - 如果发生冲突，解决冲突后先 git add .，然后继续当前的 chery-pick 序列 git cherry-pick --continue
+#        - --abort 取消当前的 chery-pick 序列，恢复当前分支到原来的样子
+#        - 批量cherry-pick: git cherry-pick <start-commit-id>^..<end-commit-id>
