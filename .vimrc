@@ -26,6 +26,8 @@ call vundle#begin()
     Plugin 'bronson/vim-trailing-whitespace' " whitespace highlight and delete
     Plugin 'scrooloose/nerdcommenter' " <leader>ci to comment and <leader>ci undo comment
     Plugin 'skywind3000/asyncrun.vim' " run shell command in background and output to quickfix
+    Plugin 'godlygeek/tabular'
+    Plugin 'plasticboy/vim-markdown' " support markdown, the tabular is required
 call vundle#end()
 filetype plugin indent on
 
@@ -85,6 +87,14 @@ let g:syntastic_auto_jump = 1 " 打开或保存文件时跳到检测到的第一
 let g:syntastic_always_populate_loc_list = 1 " 更新错误的底部显示
 
 let g:virtualenv_directory = '/root/py_env'
+
+let g:vim_markdown_folding_disabled = 1  " 不折叠显示，默认是折叠显示，看个人习惯
+let g:vim_markdown_override_foldtext = 0
+let g:vim_markdown_folding_level = 6    " 可折叠的级数，对应md的标题级别
+let g:vim_markdown_no_default_key_mappings = 1
+let g:vim_markdown_emphasis_multiline = 0
+set conceallevel=2
+let g:vim_markdown_frontmatter=1
 
 "*****************************************************************************
 " 基本设置
@@ -189,6 +199,8 @@ map <Home> ^
 imap <Home> <Esc>^i
 
 " 当前vim文件进行分屏 :sp :vsp
+" C-v 进入列模式
+" :%s/aaa/bbb/g 使用bbb内容对aaa进行替换
 
 "*****************************************************************************
 " 主题设置
