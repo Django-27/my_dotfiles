@@ -1,4 +1,3 @@
-
 " Author: nfs_fly
 " Create Date: 2020-2
 " NOTE: Only use the config which you know its meaning.
@@ -28,6 +27,7 @@ call vundle#begin()
     Plugin 'skywind3000/asyncrun.vim' " run shell command in background and output to quickfix
     Plugin 'godlygeek/tabular'
     Plugin 'plasticboy/vim-markdown' " support markdown, the tabular is required
+    Plugin 'simnalamburt/vim-mundo'  " visualize Vim undo tree. :undolist and <leader>u
 call vundle#end()
 filetype plugin indent on
 
@@ -35,12 +35,13 @@ autocmd FileType python nnoremap <LocalLeader>= :0,$!yapf<CR>
 
 map <leader><space> :FixWhitespace<cr>
 
-vmap <leader>fm :Autoformat<CR>>>
+vmap <leader>fm :Autoformat<CR>
 
 let g:ycm_key_list_select_completion=['<c-n>'] " 弹出列表时选择第1项的快捷键(默认为<TAB>和<Down>)
 let g:ycm_key_list_previous_completion=['<c-p>'] " 弹出列表时选择前1项的快捷键(默认为<S-TAB>和<UP>)
 let g:ycm_collect_indentifiers_from_tags_files=1 "开启 YCM 基于标签引擎
-let g:ycm_min_num_of_chars_for_completion=1 " 从第1个键入字符就开始罗列匹配项,默认是第1个字符开始
+let g:ycm_min_num_of_chars_for_completion=0 " 从第1个键入字符就开始罗列匹配项,默认是第1个字符开始
+let g:ycm_cache_omnifunc=1 " 禁止缓存匹配项，每次都重新生成匹配项
 let g:ycm_complete_in_comments = 1 " 在注释输入中也能补全
 let g:ycm_complete_in_strings = 1 " 在字符串输入中也能补全
 let g:ycm_collect_identifiers_from_comments_and_strings = 1 " 注释和字符串中的文字也会被收入补全
@@ -49,11 +50,13 @@ let g:ycm_confirm_extra_conf=0 " 停止提示是否载入本地ycm_extra_conf文
 let g:ycm_autoclose_preview_window_after_completion=1
 let g:ycm_collect_identifiers_from_comments_and_strings = 1   "注释和字符串
 let g:ycm_key_list_stop_completion = ['<C-y>'] " 停止显示补全列表(防止列表影响视野), 可以按<C-Space>重新弹出
-nnoremap <leader>fc :YcmCompleter GoToDeclaration<CR>>
-nnoremap <leader>fd :YcmCompleter GoToDefinition<CR>>
-nnoremap <leader>fe :YcmCompleter GoToDefinitionElseDeclaration<CR>>
-let g:ycm_python_binary_path = '/usr/local/bin/python3' " which python used
-let g:ycm_global_ycm_extra_conf='/root/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py' " :YcmRestartServer
+nnoremap <leader>c :YcmCompleter GoToDeclaration<CR>>
+nnoremap <leader>d :YcmCompleter GoToDefinition<CR>>
+nnoremap <leader>e :YcmCompleter GoToDefinitionElseDeclaration<CR>>
+let g:ycm_python_binary_path = '/usr/bin/python3.6m' " which python used
+let g:ycm_global_ycm_extra_conf='$HOME/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py' " :YcmRestartServer
+
+let g:pymode_options_max_line_length = 120
 
 nmap <F2> :NERDTreeToggle<CR>
 let g:NERDTreeDirArrowExpandable = '▸' " <C-w> + w 光标自动在左右侧窗口切换
@@ -86,7 +89,7 @@ let g:syntastic_check_on_open = 1 " 确保打开文件时Syntastic插件自动�
 let g:syntastic_auto_jump = 1 " 打开或保存文件时跳到检测到的第一个错误处
 let g:syntastic_always_populate_loc_list = 1 " 更新错误的底部显示
 
-let g:virtualenv_directory = '/root/py_env'
+let g:virtualenv_directory = '$HOME/py_env'
 
 let g:vim_markdown_folding_disabled = 1  " 不折叠显示，默认是折叠显示，看个人习惯
 let g:vim_markdown_override_foldtext = 0
@@ -95,6 +98,11 @@ let g:vim_markdown_no_default_key_mappings = 1
 let g:vim_markdown_emphasis_multiline = 0
 set conceallevel=2
 let g:vim_markdown_frontmatter=1
+
+nnoremap <leader>m :MundoToggle<CR>>
+let g:mundo_width = 60
+let g:mundo_preview_height = 40
+let g:mundo_right = 1
 
 "*****************************************************************************
 " 基本设置
@@ -199,7 +207,7 @@ map <Home> ^
 imap <Home> <Esc>^i
 
 " 当前vim文件进行分屏 :sp :vsp
-" C-v 进入列模式
+" C-v 进入列模式, 选中之后c进行替换，x或d进行删除
 " :%s/aaa/bbb/g 使用bbb内容对aaa进行替换
 
 "*****************************************************************************
@@ -356,7 +364,7 @@ au BufNewFile,BufRead *.py
 
 function! InsertPyHeader()
     execute "normal! i# -*- coding: utf8 -*-"
-    execute "normal! ofrom __future__ import print_function"
+    "execute "normal! ofrom __future__ import print_function"
     execute "normal! Go"
     execute "normal! Go"
     execute "normal! Goif __name__ == '__main__':"
