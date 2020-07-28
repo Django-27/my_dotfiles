@@ -53,10 +53,12 @@ let g:ycm_key_list_stop_completion = ['<C-y>'] " 停止显示补全列表(防止
 nnoremap <leader>c :YcmCompleter GoToDeclaration<CR>>
 nnoremap <leader>d :YcmCompleter GoToDefinition<CR>>
 nnoremap <leader>e :YcmCompleter GoToDefinitionElseDeclaration<CR>>
-let g:ycm_python_binary_path = '/usr/bin/python3.6m' " which python used
-let g:ycm_global_ycm_extra_conf='$HOME/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py' " :YcmRestartServer
+let g:ycm_python_binary_path = '/usr/bin/python' " which python used
+let g:ycm_global_ycm_extra_conf='$HOME/.vim/.ycm_extra_conf.py' " :YcmRestartServer
+let g:ycm_server_keep_logfiles = 1
+let g:ycm_server_log_level = 'debug'
 
-let g:pymode_options_max_line_length = 120
+let g:pymode_options_max_line_length = 119
 
 nmap <F2> :NERDTreeToggle<CR>
 let g:NERDTreeDirArrowExpandable = '▸' " <C-w> + w 光标自动在左右侧窗口切换
@@ -214,19 +216,20 @@ imap <Home> <Esc>^i
 " 主题设置
 "*****************************************************************************
 " GUI 模式浅色背景，终端模式深色背景
-if has('gui_running')
-    set background=light
-else
-    set background=dark
-endif
+"if has('gui_running')
+    "set background=light
+    "set background=dark
+"else
+    "set background=dark
+"endif
 
 " 主题设置为solarized8在.vim/pack, (:colorscheme)
-set background=dark
-colorscheme solarized8
+"set background=dark
+"colorscheme solarized8
 
 " 暂时没有起作用，但是屏蔽了80列的红色突出显示
-set colorcolumn=80,100
-highlight colorcolumn ctermbg=227
+"set colorcolumn=80,100
+"highlight colorcolumn ctermbg=227
 
 "*****************************************************************************
 " 编码设置

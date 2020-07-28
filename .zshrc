@@ -1,8 +1,8 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:/usr/sbin/service:$PATH
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/root/.oh-my-zsh"
+export ZSH="/Users/sunny/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -68,14 +68,34 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-HIST_STAMPS="yyyy-mm-dd"
-
-plugins=(git autojump)
+plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
 
+alias git st='git status'
+
+alias vi='vim'
+alias game24='24gameconsole'
+
+export FLASK_DEBUG=1
+export IS_MOCK_LOGIN=1
+
+export WORKON_HOME=/Users/sunny/code/envs
+export PROJECT_HOME=/Users/sunny/code
+export VIRTUALENVWRAPPER_PYTHON=/Library/Frameworks/Python.framework/Versions/3.8/bin/python3
+source /Library/Frameworks/Python.framework/Versions/3.8/bin/virtualenvwrapper.sh
+HIST_STAMPS="yyyy-mm-dd"
+
+plugins=(git autojump)
+# 复制下面这句，开始用 j 进行跳转
+[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+
+ZSH_THEME="robbyrussell"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -100,18 +120,86 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-export WORKON_HOME=/root/py_env
-VIRTUALENVWRAPPER_PYTHON='/usr/local/bin/python3.8'
-source /usr/local/bin/virtualenvwrapper.sh
+################################################################
+################### rm 回收站 ##################################
+### 重定义rm命令 ###
+# 定义回收站目录
+trash_path='~/.trash'
+# 判断 $trash_path 定义的文件是否存在，如果不存在，那么就创建 $trash_path.
+if [ ! -d $trash_path ]; then
+    mkdir -p $trash_path
+fi
+# 定义别名：使用 rm 就调用 trash
+alias rm=trash
+# 使用 rl 就调用 'ls ~/.trash'
+# 如果更改上面的回收站目录这里的目录也需要修改
+alias rl='ls ~/.trash'
+# 使用 unrm 就调用 restorefile，需要在删除目录的父目录下执行
+alias unrm=restorefile
+# 使用 rmtrash 就调用 claearteash
+alias rmtrash=cleartrash
+# 恢复文件的函数
+restorefile()
+{
+    mv -i ~/.trash/$@  ./
+}
+# 删除文件的函数
+trash()
+{
+    mv $@  ~/.trash/
+}
+# 清空回收站的函数
+cleartrash()
+{
+    read -p "确定要清空回收站吗?[y/n]" confirm
+    [ $confirm == 'y' ] || [ $confirm == 'Y' ]  && /bin/rm -rf  ~/.trash/*
+}
+################### rm 回收站 ##################################
+################################################################
 
-export TERM=screen
+alias jbook='jupyter notebook'
 
-#source ~/.oh-my-zsh/plugins/incr/incr*.zsh
-#source ~/.bashrc
-#source ~/.bash_profile
+export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.aliyun.com/homebrew/homebrew-bottles
+export HOMEBREW_NO_AUTO_UPDATE=true
 
-alias rm='rm -i'
-alias cp='cp -i'
-alias mv='mv -i'
+export JAVA_HOME=/Library/java/JavaVirtualMachines/jdk1.8.0_241.jdk/Contents/Home
+export CLASSPATH=.:$JAVA_HOME/jre/lib/rt.jar:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+export PATH=$PATH:$JAVA_HOME/bin
 
-alias st='status'
+export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
+
+export HBASE_HOME=/usr/local/Cellar/hbase/1.3.5/libexec/
+export PATH=$PATH:${HBASE_HOME}/bin
+export PATH="/usr/local/opt/openjdk/bin:$PATH"
+
+export SPARK_HOME=/usr/local/Cellar/apache-spark/2.4.5/
+export PATH=$PATH:${SPARK_HOME}/bin
+
+export HADOOP_HOME=/usr/local/Cellar/hadoop/3.2.1_1/libexec
+export PATH=$PATH:${HADOOP_HOME}/bin
+export HADOOP_ROOT_LOGGER=INFO,console
+export HADOOP_COMMON_HOME=$HADOOP_HOME
+
+alias hstart="/usr/local/Cellar/hadoop/3.2.1_1/sbin/start-all.sh"
+alias hstop="/usr/local/Cellar/hadoop/3.2.1_1/sbin/stop-all.sh"
+
+export PYSPARK_PYTHON="/Library/Frameworks/Python.framework/Versions/3.7/bin/python3.7"
+export PYSPARK_DRIVER_PYTHON="/Library/Frameworks/Python.framework/Versions/3.7/bin/ipython3"
+export PYSPARK_DRIVER_PYTHON_OPTS="notebook"
+alias pysbook='$SPARK_PATH/bin/pyspark'
+
+export PATH="/usr/local/opt/bzip2/bin:$PATH"
+
+alias h='function hdi(){ howdoi $* -c -n 5; }; hdi'
+
+alias zk='zkServer='
+alias hstart="/usr/local/Cellar/hadoop/3.2.1_1/libexec/sbin/start-all.sh"
+alias hstop="/usr/local/Cellar/hadoop/3.2.1_1/libexec/sbin/stop-all.sh"
+
+export AIRFLOW_HOME=~/airflow
+export SLUGIFY_USES_TEXT_UNIDECODE=yes
+
+export PATH=$PATH:/Users/sunny/mq/maven/bin
+export PATH="/usr/local/opt/apr/bin:$PATH"
+
+export PATH=$PATH:/usr/local/go/bin
